@@ -15,27 +15,28 @@ int main()
     cin >> action;
     cout << "Enter the second number" << endl;
     cin >> num_2;
+    cout << "Result: ";
     switch (action){
     case '+':
-        cout << "Result: " << num_1 + num_2 << endl;
+        cout << num_1 + num_2 << endl;
         break;
     case '-':
-        cout << "Result: " << num_1 - num_2 << endl;
+        cout << num_1 - num_2 << endl;
         break;
     case '/':
         if (num_2 != 0) {
-            cout << "Result: " << num_1 / num_2 << endl;
+            cout << num_1 / num_2 << endl;
         }
         else {
             cout << "Error: Division by zero!" << endl;
         }
         break;
     case '*':
-        cout << "Result: " << num_1 * num_2 << endl;
+        cout << num_1 * num_2 << endl;
         break;
     case 'P':
         powResult = pow(num_1, num_2);
-        cout << "Result: " << powResult << endl;
+        cout << powResult << endl;
         break;
     default:
         cout << "Invalid operation!" << endl;
