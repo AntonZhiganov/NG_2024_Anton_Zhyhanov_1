@@ -15,7 +15,15 @@ int main()
 
     for (int number = 0; number < 5; number++)
     {
-        cout << num[number] << ", ";
+        if (number < 4)
+        {
+            cout << num[number] << ", ";
+        }
+        else
+        {
+            cout << num[number] << endl;
+        }
+
     }
 
     return 0;
