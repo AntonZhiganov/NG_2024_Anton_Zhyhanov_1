@@ -1,9 +1,8 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
 int main() {
-    vector<int> values(5);
+    int values[5];
 
     for (int elem = 0; elem < 5; elem++) {
         cout << "Enter " << (elem + 1) << " value: ";
@@ -11,15 +10,15 @@ int main() {
     }
 
     int maxHeight = 0;
-    for (int value : values) {
-        if (value > maxHeight) {
-            maxHeight = value;
+    for (int i = 0; i < 5; i++) {
+        if (values[i] > maxHeight) {
+            maxHeight = values[i];
         }
     }
 
     for (int row = 0; row < maxHeight; row++) {
-        for (int elem = 0; elem < 5; elem++) {
-            if (values[elem] > row) {
+        for (int i = 0; i < 5; i++) {
+            if (values[i] > row) {
                 cout << "* ";
             } else {
                 cout << "  ";
