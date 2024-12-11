@@ -1,14 +1,24 @@
 #include <iostream>
-
+#include <map>
 using namespace std;
 
 int main()
 {
     string userText;
-    int symbol;
-    cout << "Enter text" << endl;
+    cout << "Enter text: ";
     getline(cin, userText);
-    symbol = userText.length();
-    cout << "You have "  << symbol <<  " characters in the line!" << endl;
+
+    map<char, int> symbolCount;
+    for (char simbol : userText)
+    {
+        symbolCount[simbol]++;
+    }
+
+    cout << "Character counts:\n";
+    for (const auto& pair : symbolCount)
+    {
+        cout << pair.first << ": " << pair.second << endl;
+    }
+
     return 0;
 }
