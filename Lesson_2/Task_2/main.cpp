@@ -10,15 +10,15 @@ int main() {
     }
 
     int maxHeight = 0;
-    for (int i = 0; i < 5; i++) {
-        if (values[i] > maxHeight) {
-            maxHeight = values[i];
+    for (int elem = 0; elem < 5; elem++) {
+        if (values[elem] > maxHeight) {
+            maxHeight = values[elem];
         }
     }
 
     for (int row = 0; row < maxHeight; row++) {
-        for (int i = 0; i < 5; i++) {
-            if (values[i] > row) {
+        for (int elem = 0; elem < 5; elem++) {
+            if (values[elem] > row) {
                 cout << "* ";
             } else {
                 cout << "  ";
