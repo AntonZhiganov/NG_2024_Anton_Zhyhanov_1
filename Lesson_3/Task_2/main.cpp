@@ -1,100 +1,111 @@
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
 struct Matrix {
-    int** data;
-    int rows, cols;
+    int** elements;
+    int numberOfRows, numberOfColumns;
+
+    Matrix(int rows, int columns) : numberOfRows(rows), numberOfColumns(columns) {
+        elements = new int*[numberOfRows];
+        for (int rowIndex = 0; rowIndex < numberOfRows; ++rowIndex) {
+            elements[rowIndex] = new int[numberOfColumns]{0};
+        }
+    }
+
+    Matrix(const Matrix& otherMatrix) : numberOfRows(otherMatrix.numberOfRows), numberOfColumns(otherMatrix.numberOfColumns) {
+        elements = new int*[numberOfRows];
+        for (int rowIndex = 0; rowIndex < numberOfRows; ++rowIndex) {
+            elements[rowIndex] = new int[numberOfColumns];
+            for (int columnIndex = 0; columnIndex < numberOfColumns; ++columnIndex) {
+                elements[rowIndex][columnIndex] = otherMatrix.elements[rowIndex][columnIndex];
+            }
+        }
+    }
+
+    ~Matrix() {
+        for (int rowIndex = 0; rowIndex < numberOfRows; ++rowIndex) {
+            delete[] elements[rowIndex];
+        }
+        delete[] elements;
+    }
+
+    Matrix operator+(const Matrix& otherMatrix) const {
+        if (numberOfRows != otherMatrix.numberOfRows || numberOfColumns != otherMatrix.numberOfColumns) {
+            throw invalid_argument("The matrix sizes do not match!");
+        }
+        Matrix resultMatrix(numberOfRows, numberOfColumns);
+        for (int rowIndex = 0; rowIndex < numberOfRows; ++rowIndex) {
+            for (int columnIndex = 0; columnIndex < numberOfColumns; ++columnIndex) {
+                resultMatrix.elements[rowIndex][columnIndex] = elements[rowIndex][columnIndex] + otherMatrix.elements[rowIndex][columnIndex];
+            }
+        }
+        return resultMatrix;
+    }
+
+    Matrix operator-(const Matrix& otherMatrix) const {
+        if (numberOfRows != otherMatrix.numberOfRows || numberOfColumns != otherMatrix.numberOfColumns) {
+            throw invalid_argument("The matrix sizes do not match!");
+        }
+        Matrix resultMatrix(numberOfRows, numberOfColumns);
+        for (int rowIndex = 0; rowIndex < numberOfRows; ++rowIndex) {
+            for (int columnIndex = 0; columnIndex < numberOfColumns; ++columnIndex) {
+                resultMatrix.elements[rowIndex][columnIndex] = elements[rowIndex][columnIndex] - otherMatrix.elements[rowIndex][columnIndex];
+            }
+        }
+        return resultMatrix;
+    }
+
+    void inputMatrix(const string& matrixName) {
+        cout << "Enter matrix elements" << matrixName << " (" << numberOfRows << "x" << numberOfColumns << "):\n";
+        for (int rowIndex = 0; rowIndex < numberOfRows; ++rowIndex) {
+            for (int columnIndex = 0; columnIndex < numberOfColumns; ++columnIndex) {
+                cin >> elements[rowIndex][columnIndex];
+            }
+        }
+    }
+
+    void printMatrix(const string& matrixName) const {
+        cout << "Matrix " << matrixName << ":\n";
+        for (int rowIndex = 0; rowIndex < numberOfRows; ++rowIndex) {
+            for (int columnIndex = 0; columnIndex < numberOfColumns; ++columnIndex) {
+                cout << elements[rowIndex][columnIndex] << " ";
+            }
+            cout << endl;
+        }
+    }
 };
 
-Matrix createMatrix(int rows, int cols) {
-    Matrix matrix;
-    matrix.rows = rows;
-    matrix.cols = cols;
-    matrix.data = new int*[rows];
-    for (int i = 0; i < rows; ++i) {
-        matrix.data[i] = new int[cols]{0};
-    }
-    return matrix;
-}
-
-void inputMatrix(Matrix& matrix, const string& name) {
-    cout << "Enter the matrix elements " << name << " (" << matrix.rows << "x" << matrix.cols << "):\n";
-    for (int i = 0; i < matrix.rows; ++i) {
-        for (int j = 0; j < matrix.cols; ++j) {
-            cin >> matrix.data[i][j];
-        }
-    }
-}
-
-void printMatrix(const Matrix& matrix, const string& name) {
-    cout << "Matrix " << name << ":\n";
-    for (int i = 0; i < matrix.rows; ++i) {
-        for (int j = 0; j < matrix.cols; ++j) {
-            cout << matrix.data[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
-
-Matrix addMatrices(const Matrix& A, const Matrix& B) {
-    if (A.rows != B.rows || A.cols != B.cols) {
-        throw invalid_argument("The dimensions of the matrices do not match!");
-    }
-    Matrix result = createMatrix(A.rows, A.cols);
-    for (int i = 0; i < A.rows; ++i) {
-        for (int j = 0; j < A.cols; ++j) {
-            result.data[i][j] = A.data[i][j] + B.data[i][j];
-        }
-    }
-    return result;
-}
-
-Matrix subtractMatrices(const Matrix& A, const Matrix& B) {
-    if (A.rows != B.rows || A.cols != B.cols) {
-        throw invalid_argument("The dimensions of the matrices do not match!");
-    }
-    Matrix result = createMatrix(A.rows, A.cols);
-    for (int i = 0; i < A.rows; ++i) {
-        for (int j = 0; j < A.cols; ++j) {
-            result.data[i][j] = A.data[i][j] - B.data[i][j];
-        }
-    }
-    return result;
-}
-
-void deleteMatrix(Matrix& matrix) {
-    for (int i = 0; i < matrix.rows; ++i) {
-        delete[] matrix.data[i];
-    }
-    delete[] matrix.data;
-}
-
 int main() {
-    int rows, cols;
+    int numberOfRows, numberOfColumns;
 
-    cout << "Enter the number of rows and columns of the matrices: ";
-    cin >> rows >> cols;
+    cout << "Enter the number of rows and columns of matrices: ";
+    cin >> numberOfRows >> numberOfColumns;
 
-    Matrix A = createMatrix(rows, cols);
-    Matrix B = createMatrix(rows, cols);
+    Matrix matrixA(numberOfRows, numberOfColumns);
+    Matrix matrixB(numberOfRows, numberOfColumns);
 
-    inputMatrix(A, "A");
-    inputMatrix(B, "B");
+    matrixA.inputMatrix("A");
+    matrixB.inputMatrix("B");
+
+    cout << "Choose an operation: 1 - Sum, 2 - Difference: ";
+    int choice;
+    cin >> choice;
 
     try {
-        Matrix sum = addMatrices(A, B);
-        printMatrix(sum, "Summ (A + B)");
-        deleteMatrix(sum);
-
-        Matrix difference = subtractMatrices(A, B);
-        printMatrix(difference, "difference (A - B)");
-        deleteMatrix(difference);
-    } catch (const exception& e) {
-        cout << "Error: " << e.what() << endl;
+        if (choice == 1) {
+            Matrix sumMatrix = matrixA + matrixB;
+            sumMatrix.printMatrix("Sum (A + B)");
+        } else if (choice == 2) {
+            Matrix differenceMatrix = matrixA - matrixB;
+            differenceMatrix.printMatrix("Difference (A - B)");
+        } else {
+            cout << "Wrong choice of operation!" << endl;
+        }
+    } catch (const exception& error) {
+        cout << "Error: " << error.what() << endl;
     }
-
-    deleteMatrix(A);
-    deleteMatrix(B);
 
     return 0;
 }
+
