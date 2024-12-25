@@ -114,27 +114,22 @@ int main() {
         std::cout << "Choose an option: ";
         std::cin >> choice;
 
+        std::cout << "Enter account ID: ";
+        std::cin >> account_id;
+
         switch (choice) {
         case 1:
-            std::cout << "Enter account ID: ";
-            std::cin >> account_id;
             bank.create_account(account_id);
             break;
         case 2:
-            std::cout << "Enter account ID: ";
-            std::cin >> account_id;
             bank.delete_account(account_id);
             break;
         case 3:
-            std::cout << "Enter account ID: ";
-            std::cin >> account_id;
             std::cout << "Enter amount to deposit: ";
             std::cin >> amount;
             bank.deposit_money(account_id, amount);
             break;
         case 4:
-            std::cout << "Enter account ID: ";
-            std::cin >> account_id;
             std::cout << "Enter amount to withdraw: ";
             std::cin >> amount;
             bank.withdraw_money(account_id, amount);
@@ -145,8 +140,6 @@ int main() {
             bank.set_date(date);
             break;
         case 6:
-            std::cout << "Enter account ID: ";
-            std::cin >> account_id;
             bank.print_account(account_id);
             break;
         case 0:
@@ -156,5 +149,3 @@ int main() {
         }
     }
 }
-
-
