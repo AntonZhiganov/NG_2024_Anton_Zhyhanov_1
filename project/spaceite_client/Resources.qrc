@@ -4,5 +4,6 @@
         <file>Resources/images/space/frog40.png</file>
         <file>Resources/images/space/floor.png</file>
         <file>Resources/images/player/player.png</file>
+        <file>Resources/images/ItemToUse/stone.png</file>
     </qresource>
 </RCC>
