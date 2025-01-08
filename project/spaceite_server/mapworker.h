@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QFile>
+#include <QPoint>
+
 
 #include "logger.h"
 #include "../libs/Position.h"
@@ -25,6 +27,8 @@ signals:
 private:
     bool loadMap();
     bool loadDefaultPlayerPosition();
+    bool loadStonePosition();
+    QPoint m_stonePosition;
 
     QVector<QVector<char>> m_mapData;
     QString m_defaultPlayerPostion;

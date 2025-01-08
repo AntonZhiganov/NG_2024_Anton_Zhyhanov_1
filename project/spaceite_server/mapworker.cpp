@@ -11,19 +11,26 @@ MapWorker::MapWorker(QObject *parent)
     }
 
     loadDefaultPlayerPosition();
+    loadStonePosition();
 }
 
 QString MapWorker::getMapString()
 {
     QString responce;
-    for (QVector<char> row : m_mapData) {
-        for (char item : row) {
-            responce += item;
+    for (int y = 0; y < m_mapData.size(); ++y) {
+        for (int x = 0; x < m_mapData[y].size(); ++x) {
+            if (x == m_stonePosition.x() && y == m_stonePosition.y()) {
+                responce += 'S';
+            } else {
+                responce += m_mapData[y][x];
+            }
         }
         responce += ",";
     }
     return responce;
 }
+
+
 
 Position MapWorker::getBasicPlayerPosition()
 {
@@ -73,3 +80,20 @@ bool MapWorker::loadDefaultPlayerPosition()
     m_logger->log(posFile.errorString());
     return false;
 }
+
+bool MapWorker::loadStonePosition()
+{
+    QFile stoneFile(":/Resources/misc/stonePos.txt");
+    if (stoneFile.open(QIODevice::ReadOnly)) {
+        QList<QByteArray> rows = stoneFile.readAll().split('\n');
+        if (rows.size() >= 2) {
+            m_stonePosition.setX(rows[0].toInt());
+            m_stonePosition.setY(rows[1].toInt());
+            m_logger->log("Loaded stone position: " + QString::number(m_stonePosition.x()) + "," + QString::number(m_stonePosition.y()));
+            return true;
+        }
+    }
+    m_logger->log(stoneFile.errorString());
+    return false;
+}
+
