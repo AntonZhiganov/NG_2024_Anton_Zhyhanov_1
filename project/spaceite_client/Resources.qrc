@@ -5,5 +5,8 @@
         <file>Resources/images/space/floor.png</file>
         <file>Resources/images/player/player.png</file>
         <file>Resources/images/ItemToUse/stone.png</file>
+        <file>Resources/images/space/stoneOnTheFloor.png</file>
+        <file>Resources/images/space/stickOnTheFloor.png</file>
+        <file>Resources/images/ItemToUse/stick.png</file>
     </qresource>
 </RCC>

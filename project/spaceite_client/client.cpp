@@ -120,7 +120,8 @@ QPixmap Client::getImage(char element)
     case '#': elementName = "space/wall.png"; break;
     case '*': elementName = "space/frog40.png"; break;
     case 'P': elementName = "player/player.png"; break;
-    case 'S': elementName = "ItemToUse/stone.png"; break;
+    case 'S': elementName = "space/stoneOnTheFloor.png"; break;
+    case 's': elementName = "space/stickOnTheFloor.png"; break;
     }
     return QPixmap(":/Resources/images/" + elementName);
 }

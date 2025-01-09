@@ -2,6 +2,5 @@
     <qresource prefix="/">
         <file>Resources/misc/playerPos.txt</file>
         <file>Resources/misc/map.txt</file>
-        <file>Resources/misc/stonePos.txt</file>
     </qresource>
 </RCC>
