@@ -8,5 +8,6 @@
         <file>Resources/images/space/stoneOnTheFloor.png</file>
         <file>Resources/images/space/stickOnTheFloor.png</file>
         <file>Resources/images/ItemToUse/stick.png</file>
+        <file>Resources/images/characters/ai.png</file>
     </qresource>
 </RCC>

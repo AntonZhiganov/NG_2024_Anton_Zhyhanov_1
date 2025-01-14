@@ -46,9 +46,6 @@ void Networker::readyRead()
         processRawRequest(package);
     }
     processRawRequest(data);
-
-    // How we can parse multiple json's at once?
-    //
 }
 
 void Networker::processRawRequest(QByteArray rawRequest)
