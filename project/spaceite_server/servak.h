@@ -2,6 +2,8 @@
 #define SERVAK_H
 
 #include <QObject>
+#include <QMap>
+#include <QByteArray>
 #include "networker.h"
 #include "mapworker.h"
 #include "logger.h"
@@ -13,14 +15,19 @@ class Servak : public QObject
 public:
     explicit Servak(QObject *parent = nullptr);
 
+    enum Action {
+        move,
+        pos,
+        assignId,
+        map,
+        mapUpdate
+    };
+
 private slots:
     void newClientArrived(QByteArray id);
     void onPlayerCommand(NetworkParser::Request req);
     void processPlayerMove(QByteArray id, NetworkParser::Direction direction);
-    NetworkParser::Request prepareRequest(QByteArray uuid,
-                        NetworkParser::Action action,
-                        NetworkParser::Direction direction,
-                        QString additionalInfo);
+    NetworkParser::Request prepareRequest(QByteArray uuid, Action action, NetworkParser::Direction direction, QString additionalInfo);
     void onPlayerDisconnect(QByteArray id);
 
 signals:
