@@ -74,9 +74,3 @@ bool MapWorker::loadDefaultPlayerPosition()
     m_logger->log(posFile.errorString());
     return false;
 }
-
-char& MapWorker::getCellAt(const Position& pos)
-{
-    return m_mapData[pos.y][pos.x];
-}
-

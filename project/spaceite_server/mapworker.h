@@ -17,7 +17,7 @@ public:
     QString getBasicPlayerPositionString() { return m_defaultPlayerPostion;};
     Position getBasicPlayerPosition();
     bool isPositionSteppable(Position pos);
-    char& getCellAt(const Position& pos);
+
 
 signals:
     void mapLoadingError();
